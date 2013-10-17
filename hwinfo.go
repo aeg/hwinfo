@@ -7,7 +7,7 @@ package hwinfo
 
 import (
 	"fmt"
-	"github.com/fedesog/byteunit"
+	"github.com/fedesog/hwinfo/byteunit"
 	"path"
 	"strings"
 )
