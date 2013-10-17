@@ -1,4 +1,8 @@
-//retrieve hardware information (linux only)
+// Copyright 2013 Federico Sogaro. All rights reserved.
+// Use of this source code is governed by a BSD-style
+// license that can be found in the LICENSE file.
+
+//TODO package description
 package hwinfo
 
 import (
