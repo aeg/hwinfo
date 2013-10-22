@@ -62,15 +62,15 @@ func Parse(str string) (Size, error) {
 	if err != nil {
 		panic("unreachable (bug in regexp!)")
 	}
-	switch submatches[2] {
+	switch strings.ToLower(submatches[2]) {
 	case "byte", "bytes", "byte(s)":
-	case "Kb", "kb":
+	case "kb":
 		value *= 1<<10
-	case "MB", "mb":
+	case "mb":
 		value *= 1<<20
-	case "GB", "gb":
+	case "gb":
 		value *= 1<<30
-	case "TB", "tb":
+	case "tb":
 		value *= 1<<40
 	default:
 		return 0, fmt.Errorf("invalid byteunit: %s", str)
