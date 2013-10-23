@@ -97,7 +97,7 @@ func ListCPUInfo() ([]CPUInfo, error) {
 		case "processor":
 			n, err := strToInt(val)
 			if err != nil {
-				return nil, fmt.Errorf("processor number: %v", err)
+				return nil, fmt.Errorf("processor number: %v\n%s", err, l)
 			}
 			if n != currentProcessor {
 				cpus = append(cpus, cpu)
@@ -112,14 +112,14 @@ func ListCPUInfo() ([]CPUInfo, error) {
 				// doesn't exist?
 				freqMHz, err := strToFloat(val)
 				if err != nil {
-					return nil, fmt.Errorf("error reading processor frequency: %v", err)
+					return nil, fmt.Errorf("error reading processor frequency: %v\n%s", err, l)
 				} else {
 					cpu.FreqGHz = freqMHz/1000
 				}
 			} else {
 				freqkHz, err := strToInt(string(es1.Stdout))
 				if err != nil {
-					return nil, fmt.Errorf("error reading processor frequency (sysfs): %v", err)
+					return nil, fmt.Errorf("error reading processor frequency (sysfs): %v\n%s", err, l)
 				} else {
 					cpu.FreqGHz = float64(freqkHz)/1000000
 				}
@@ -129,21 +129,21 @@ func ListCPUInfo() ([]CPUInfo, error) {
 		case "physical id":
 			id, err := strToInt(val)
 			if err != nil {
-				return nil, fmt.Errorf("error reading processor id: %v", err)
+				return nil, fmt.Errorf("error reading processor id: %v\n%s", err, l)
 			} else {
 			 cpu.PhysicalId = id
 			}
 		case "cpu cores":
 			cores, err := strToInt(val)
 			if err != nil {
-				return nil, fmt.Errorf("error reading processor cores: %v", err)
+				return nil, fmt.Errorf("error reading processor cores: %v\n%s", err, l)
 			} else {
 				cpu.PhysicalCores = cores
 			}
 		case "siblings":
 			siblings, err := strToInt(val)
 			if err != nil {
-				return nil, fmt.Errorf("error reading processor siblings: %v", err)
+				return nil, fmt.Errorf("error reading processor siblings: %v\n%s", err, l)
 			} else {
 				cpu.LogicalCores = siblings
 			}
@@ -239,10 +239,7 @@ func ReadRAMInfo() (*RAMInfo, error) {
 			module.Type = val
 		case "Speed":
 			if module.Size != 0 {
-				_, err := fmt.Sscan(val, &module.FreqMHz)
-				if err != nil {
-					return nil, fmt.Errorf("error reading RAM speed: %v", err)
-				}
+				fmt.Sscan(val, &module.FreqMHz)
 			}
 		case "Locator":
 			module.Slot = val
